@@ -1,4 +1,4 @@
-# implementacionRoboticaInt
+# Implementación de Robótica Inteligente
 
 En este bloque modelarás y construirás un robot móvil que cuente con un sistema de visión que le permita navegar de manera autónoma. 
 Dicho robot utilizará métodos de control difuso para su actuar, así como redes neuronales profundas para el procesamiento de información visual. 
