@@ -1,7 +1,7 @@
 function [x,y] = mapCreator()
     
     %https://la.mathworks.com/help/nav/ref/binaryoccupancymap.html
-    image = imread('laberinto.png');
+    image = imread('laberinto.png');   
     grayimage = rgb2gray(image);
     BinaryMap = double(grayimage < 0.5);
     grid = binaryOccupancyMap(BinaryMap);
@@ -10,7 +10,9 @@ function [x,y] = mapCreator()
     show(grid)
 
     map = binaryOccupancyMap(rot90(transpose(BinaryMap)),1000/10);
-    
+    robotRadius = 0.18;
+    inflate (map, robotRadius);
+
     % Creamos un espacio de estados 2-dimensional
     ss = stateSpaceSE2;
     % Creamos un validador de estado a partir de SS
@@ -32,7 +34,7 @@ function [x,y] = mapCreator()
     % Seguimos afinando el camino
     planner_star.ContinueAfterGoalReached = true;
     % Ponemos un límite para no irnos al infinito
-    planner_star.MaxIterations = 2000;
+    planner_star.MaxIterations = 2500;
     planner_star.MaxConnectionDistance = 0.5;
   
     [pthObj_star,solnInfo_star] = plan(planner_star,startLocation,endLocation);
