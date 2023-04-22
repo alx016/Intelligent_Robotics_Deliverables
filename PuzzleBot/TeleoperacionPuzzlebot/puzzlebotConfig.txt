@@ -1,0 +1,110 @@
+# Config file for puzzlebot with pololu brushed dc motors
+
+PidDt: 0.01			# Pid controller loop sampling time
+
+# Main parameters for the robot
+Robot:
+  Type: 1			# 1-differential drive robot; 2-holonomic robot
+  ControlInput: 3		# 1-robot linear and angular velocities; 2-wheel angular velocities setpoints; 3-wheel pwm voltage signals 
+  WheelBase: 0.083		# Half of the robot width
+  WheelRadius: 0.0505		# Wheel radius
+  TopicVx: VelocityLinearX	# Topic for receiving linear velocity of the robot
+  TopicVy: VelocityLinearY	# Topic for receiving linear velocity of the robot on Y(for holonomic robot)
+  TopicW: VelocityAngular	# Topic for receiving angular velocity of the robot
+
+# Parameters for the right wheel
+RightWheel:
+  Motor:		# Right motor parameters
+    Pins: [4, 15, 18]		# Motor driver pins
+    Sign: -1			# Motor direction setting (-1/1)
+    Type: 2			# Motor type. 1-brushless; 2-brushed
+    Topic: ControlR		# Topic for receiving control pwm
+  Encoder:		# Right encoder parameters
+    Pins: [34, 36]		# Encoder pins
+    Sign: 1			# Encoder direction setting (-1/1)
+    Ticks: 48			# Encoder number of ticks for one rotation
+    Gear: 34			# Gear ratio
+    Type: 2			# Encoder type. 1-single pulse(no direction); 2-double pulse(with direction)
+    MeasureType: 1		# Encoder velocity measurement type. 1-count pulses; 2-measure pulse duration
+    Topic: VelocityEncR		# Encoder velocity publish topic
+  Pid:			# Right Pid controller parameters
+    Kp: 0.1			# Proportional gain
+    Ti: 0.05			# Integration time
+    Td: 0			# Derivation time
+    DeadZone: 0.1		# Motor control dead zone
+    Topic: VelocitySetR		# Topic for receiving velocity setpoint
+
+# Parameters for the left wheel
+LeftWheel:
+  Motor:		# Left motor parameters
+    Pins: [2, 13, 14]		# Motor driver pins
+    Sign: -1			# Motor direction setting (-1/1)
+    Type: 2			# Motor type. 1-brushless; 2-brushed
+    Topic: ControlL		# Topic for receiving control pwm
+  Encoder:		# Left encoder parameters
+    Pins: [39, 35]		# Encoder pins
+    Sign: 1			# Encoder direction setting (-1/1)
+    Ticks: 48			# Encoder number of ticks for one rotation
+    Gear: 34			# Gear ratio
+    Type: 2			# Encoder type. 1-single pulse(no direction); 2-double pulse(with direction)
+    MeasureType: 1		# Encoder velocity measurement type. 1-count pulses; 2-measure pulse duration
+    Topic: VelocityEncL		# Encoder velocity publish topic
+  Pid:			# Left Pid controller parameters
+    Kp: 0.1			# Proportional gain
+    Ti: 0.05			# Integration time
+    Td: 0			# Derivation time
+    DeadZone: 0.1		# Motor control dead zone
+    Topic: VelocitySetL		# Topic for receiving velocity setpoint
+
+# Parameters for sonar
+Sonar:
+  Pins: 14			# Sonar pins
+  Topic: SonarDistance		# Topic for publishing sonar measured distance
+
+# Parameters for servo motor
+Servo:
+  Pins: 5			# Servo motor pins
+  Offset: 0			# Servo motor center offset
+  AngleMin: 30			# Servo motor min angle (degrees)
+  AngleMax: 170			# Servo motor max angle (degrees)
+  Topic: ServoAngle		# Topic for receiving servo motor angle (degrees)
+
+# Parameters for reflectance sensor
+Reflectance:
+  NPins: 6					# Number of pins (number of light sensors used)
+  Pins: [23, 22, 19, 27, 25, 32]	   		# Reflectance pins
+  EmitterPins: [26, 33]				# Emitter pins (for selecting even/odd lights on/off)
+  EmitterSelect: 2				# Emitter selector. 1-even; 2-odd; 3-all
+  MinValues: [600, 600, 600, 600, 600, 600]	# Minimal reflectance values measured during calibration (use webpage)
+  MinAvg: 2000					# Minimal reflectance average value measured during calibration
+  Threshold: 1.1				# Line detection treshold
+  Topic: LineSensor				# Topic for publishing line position relative to the sensor
+
+# Parameters for lidar sensor
+Lidar:
+  SerialPins: [33, 32]          # Serial interface pins
+  MotorPin: 14                  # Lidar motor pins
+  ScanFrequency: 5              # Lidar scan frequency (Hz)
+  QualityThreshold: 10          # Measurement reject quality threshold (quality:0-60, higher quality is better)
+
+# Network parameters
+Network:
+  SSID:  Puzzlebot4		# Access point ssid
+  Password:  Puzzlebot72	# Access point password
+  IP:  [192, 168, 1, 1]		# Access point IP
+  RosIP: [192, 168, 1, 2]	# Ros master IP (when ros connection is active)
+  PortWeb:  80			# Port for the web server
+  PortData: 3141		# Port for data communication server (tcp/udp)
+  WiFiPower:  78		# Wifi transmitter power (78 is maximum)
+  WebPage:  puzzlebot		# Domain name for the webpage
+
+# Active modules settings
+ActiveModules:
+  Servo:   0			# Servo motor on/off (1/0)
+  Sonar:   0			# Sonar on/off (1/0)
+  Reflect: 0			# Reflectance sensor on/off (1/0)
+  Lidar:   0			# Lidar on/off (1/0)
+  Screen:  1			# Screen on/off (1/0)
+  Ros:     0			# Ros communication on/off (1/0)
+
+
